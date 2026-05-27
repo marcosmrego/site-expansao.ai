@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerador de Documentos & Serviços</title>
+  <!-- Google AdSense (substitua pelo seu) -->
+  <script data-ad-client="ca-pub-XXXXXXXXXXXXXXX" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f7f8; color: #333; }
+    header { background: #2980b9; color: #fff; padding: 10px 20px; }
+    .logo { font-size: 1.5rem; font-weight: bold; }
+    nav { margin-top: 10px; }
+    nav ul { list-style: none; display: flex; gap: 15px; }
+    nav a { color: #fff; text-decoration: none; font-weight: 600; }
+    .ad-banner { width: 100%; text-align: center; margin: 15px 0; }
+    .container { display: flex; gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+    .main { flex: 1; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .sidebar { width: 300px; display: flex; flex-direction: column; gap: 20px; }
+    .ad-slot { background: #f9f9f9; border: 1px dashed #ccc; padding: 10px; text-align: center; border-radius: 4px; }
+    h1 { margin-bottom: 20px; color: #2c3e50; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; }
+    input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+    textarea { resize: vertical; }
+    .inline { display: flex; align-items: center; gap: 10px; }
+    .item { display: flex; gap: 8px; margin-bottom: 8px; }
+    .item button { background: #e74c3c; color: #fff; border: none; border-radius: 4px; padding: 0 8px; cursor: pointer; }
+    .add-btn, button[type="submit"] { background: #27ae60; color: #fff; border: none; border-radius: 4px; padding: 10px 16px; font-size: 1rem; cursor: pointer; }
+    button[type="submit"] { background: #2980b9; width: 100%; }
+    button:hover { opacity: 0.9; }
+    .note { font-size: 0.9rem; color: #666; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">DocGen Pro</div>
+    <nav>
+      <ul>
+        <li><a href="#serviceSelect">Serviços</a></li>
+        <li><a href="#formSection">Formulário</a></li>
+        <li><a href="#plans">Planos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="ad-banner">
+    <!-- Banner Topo (728x90) -->
+    <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+         data-ad-slot="YYYYYYYYYY"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div class="container">
+    <div class="main">
+      <section id="serviceSelect">
+        <h1>Escolha seu Serviço</h1>
+        <div class="form-group">
+          <label for="serviceType">Tipo de Documento</label>
+          <select id="serviceType">
+            <option value="cv">Currículo</option>
+            <option value="letter">Carta de Apresentação</option>
+          </select>
+        </div>
+      </section>
+
+      <section id="formSection">
+        <form id="docForm">
+          <!-- Campos Comuns -->
+          <div class="form-group">
+            <label for="name">Nome Completo</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefone/WhatsApp</label>
+            <input type="tel" id="phone" name="phone" placeholder="+5511999999999" required />
+          </div>
+
+          <!-- Seções Dinâmicas -->
+          <div id="cvFields" style="display:none;">
+            <div class="form-group dynamic-list" id="expList">
+              <label>Experiências Profissionais</label>
+              <button type="button" class="add-btn" onclick="addExperience()">+ Adicionar Experiência</button>
+            </div>
+            <div class="form-group dynamic-list" id="eduList">
+              <label>Formação Acadêmica</label>
+              <button type="button" class="add-btn" onclick="addEducation()">+ Adicionar Educação</button>
+            </div>
+            <div class="form-group">
+              <label for="skills">Skills (vírgula separadas)</label>
+              <input type="text" id="skills" name="skills" />
+            </div>
+          </div>
+
+          <div id="letterFields" style="display:none;">
+            <div class="form-group">
+              <label for="company">Empresa</label>
+              <input type="text" id="company" name="company" />
+            </div>
+            <div class="form-group">
+              <label for="position">Vaga</label>
+              <input type="text" id="position" name="position" />
+            </div>
+            <div class="form-group">
+              <label for="strengths">Pontos Fortes</label>
+              <textarea id="strengths" name="strengths" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div id="proposalFields" style="display:none;">
+            <div class="form-group">
+              <label for="clientName">Nome do Cliente</label>
+              <input type="text" id="clientName" name="clientName" />
+            </div>
+            <div class="form-group">
+              <label for="proposalDetails">Detalhes da Proposta</label>
+              <textarea id="proposalDetails" name="proposalDetails" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div id="contractFields" style="display:none;">
+            <div class="form-group">
+              <label for="partyA">Parte A</label>
+              <input type="text" id="partyA" name="partyA" />
+            </div>
+            <div class="form-group">
+              <label for="partyB">Parte B</label>
+              <input type="text" id="partyB" name="partyB" />
+            </div>
+            <div class="form-group">
+              <label for="contractTerm">Objeto do Contrato</label>
+              <textarea id="contractTerm" name="contractTerm" rows="4"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="whatsappNumber">Número para WhatsApp</label>
+            <input type="tel" id="whatsappNumber" name="whatsappNumber" required />
+          </div>
+          <button type="submit">Gerar & Enviar</button>
+          <p class="note">Seu documento será enviado para o WhatsApp em instantes.</p>
+        </form>
+      </section>
+    </div>
+
+  </div>
+
+  <footer style="text-align:center; padding:20px; font-size:0.9rem; color:#666;">
+    &copy; 2025 DocGen Pro. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    const serviceType = document.getElementById('serviceType');
+    const sections = {
+      cv: document.getElementById('cvFields'),
+      letter: document.getElementById('letterFields'),
+      proposal: document.getElementById('proposalFields'),
+      contract: document.getElementById('contractFields')
+    };
+    serviceType.addEventListener('change', () => {
+      Object.keys(sections).forEach(key => {
+        sections[key].style.display = key === serviceType.value ? 'block' : 'none';
+      });
+    });
+    serviceType.dispatchEvent(new Event('change'));
+
+    function addExperience() {
+      const c = document.getElementById('expList');
+      const i = c.querySelectorAll('.item').length;
+      const d = document.createElement('div');
+      d.className = 'item';
+      d.innerHTML = `
+        <input type="text" name="exp_title_${i}" placeholder="Título/Posição" required />
+        <input type="text" name="exp_company_${i}" placeholder="Empresa" required />
+        <input type="text" name="exp_period_${i}" placeholder="Período" required />
+        <button type="button" onclick="this.parentNode.remove()">✕</button>`;
+      c.insertBefore(d, c.querySelector('.add-btn'));
+    }
+
+    function addEducation() {
+      const c = document.getElementById('eduList');
+      const i = c.querySelectorAll('.item').length;
+      const d = document.createElement('div');
+      d.className = 'item';
+      d.innerHTML = `
+        <input type="text" name="edu_course_${i}" placeholder="Curso" required />
+        <input type="text" name="edu_institution_${i}" placeholder="Instituição" required />
+        <input type="text" name="edu_year_${i}" placeholder="Ano" required />
+        <button type="button" onclick="this.parentNode.remove()">✕</button>`;
+      c.insertBefore(d, c.querySelector('.add-btn'));
+    }
+
+    function collectList(prefix, fields) {
+      return Array.from(document.querySelectorAll(`#${prefix}List .item`))
+        .map((item, i) => {
+          const obj = {};
+          fields.forEach(f => {
+            obj[f] = item.querySelector(`[name="${prefix}_${f}_${i}"]`).value;
+          });
+          return obj;
+        });
+    }
+
+    document.getElementById('docForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const f = e.target;
+      const payload = {
+        service: serviceType.value,
+        name: f.name.value,
+        email: f.email.value,
+        phone: f.phone.value.replace(/[^+\d]/g,''),
+        whatsappNumber: f.whatsappNumber.value.replace(/[^+\d]/g,'')
+      };
+      if (serviceType.value === 'cv') {
+        payload.experiences = collectList('exp',['title','company','period']);
+        payload.education    = collectList('edu',['course','institution','year']);
+        payload.skills       = f.skills.value;
+      }
+      if (serviceType.value === 'letter') {
+        payload.company   = f.company.value;
+        payload.position  = f.position.value;
+        payload.strengths = f.strengths.value;
+      }
+      if (serviceType.value === 'proposal') {
+        payload.clientName     = f.clientName.value;
+        payload.proposalDetails = f.proposalDetails.value;
+      }
+      if (serviceType.value === 'contract') {
+        payload.partyA        = f.partyA.value;
+        payload.partyB        = f.partyB.value;
+        payload.contractTerm  = f.contractTerm.value;
+      }
+      try {
+        const res = await fetch('https://SEU_DOMINIO.com/webhook/cv-generator', {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json();
+        alert('✅ Documento gerado! Msg WhatsApp: ' + json.whatsappMessageId);
+        f.reset();
+        serviceType.dispatchEvent(new Event('change'));
+      } catch (err) {
+        console.error(err);
+        alert('❌ Erro ao gerar documento.');
+      }
+    });
+  </script>
+</body>
+</html>
