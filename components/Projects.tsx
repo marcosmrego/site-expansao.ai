@@ -3,6 +3,7 @@ import {
   IconCloudComputing,
   IconChartLine,
   IconRobot,
+  IconShieldCheck,
 } from "@tabler/icons-react";
 import { InvestmentPreview } from "./InvestmentPreview";
 import { ClimatePreview } from "./ClimatePreview";
@@ -15,6 +16,16 @@ const projects = [
     description:
       "Dashboard experimental para leitura de indicadores climáticos, variações e tendências com foco em dados públicos e visualização simples.",
     icon: IconCloudComputing,
+    url: "https://climate.expansao-ai.com.br",
+  },
+  {
+    id: "grc",
+    title: "GRC Flow",
+    label: "Governança e Compliance",
+    description:
+      "Plataforma para gestão de processos, documentos e conformidade regulatória. Fluxos de aprovação, base de conhecimento e rastreabilidade.",
+    icon: IconShieldCheck,
+    url: "https://grcflow.expansao-ai.com.br",
   },
   {
     id: "investment",
@@ -105,8 +116,13 @@ export function Projects() {
                   <span>{project.label}</span>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
-                  <a className="showcase-link" href="#contato">
-                    Conversar sobre isso
+                  <a
+                    className="showcase-link"
+                    href={project.url ?? "#contato"}
+                    target={project.url ? "_blank" : undefined}
+                    rel={project.url ? "noopener noreferrer" : undefined}
+                  >
+                    {project.url ? "Ver projeto" : "Conversar sobre isso"}
                     <IconArrowUpRight size={16} />
                   </a>
                 </div>
