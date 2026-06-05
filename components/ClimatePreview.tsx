@@ -120,8 +120,8 @@ export function ClimatePreview() {
   const { line: co2Line, area: co2Area } = toPath(co2Values, 340, 60);
 
   const analysisText = data?.analysis?.analysis ?? "";
-  const analysisSnippet = analysisText.length > 220
-    ? analysisText.slice(0, 220).replace(/\s\S+$/, "") + "…"
+  const analysisSnippet = analysisText.length > 180
+    ? analysisText.slice(0, 180).replace(/\s\S+$/, "") + "…"
     : analysisText;
 
   return (
