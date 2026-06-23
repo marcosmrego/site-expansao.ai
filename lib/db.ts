@@ -53,6 +53,11 @@ export type ResumoSemanal = {
   criado_em: string;
 };
 
+function paraNumero(valor: unknown): number | null {
+  if (valor === null || valor === undefined) return null;
+  return Number(valor);
+}
+
 export async function buscarResumosSemanais(limite = 12): Promise<ResumoSemanal[]> {
   const { rows } = await getPool().query<ResumoSemanal>(
     "SELECT id, semana_inicio, semana_fim, ifix_variacao_semana, " +
@@ -61,5 +66,11 @@ export async function buscarResumosSemanais(limite = 12): Promise<ResumoSemanal[
       "FROM resumo_semanal ORDER BY semana_fim DESC LIMIT $1",
     [limite]
   );
-  return rows;
+  // node-postgres retorna colunas NUMERIC como string, nao como number
+  return rows.map((row) => ({
+    ...row,
+    ifix_variacao_semana: paraNumero(row.ifix_variacao_semana),
+    ifix_variacao_semana_anterior: paraNumero(row.ifix_variacao_semana_anterior),
+    setor_destaque_variacao: paraNumero(row.setor_destaque_variacao),
+  }));
 }
