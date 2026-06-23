@@ -33,3 +33,33 @@ export async function buscarExecucoes(limite = 30): Promise<ExecucaoPipeline[]> 
   );
   return rows;
 }
+
+export type VariacaoFii = {
+  ticker: string;
+  variacao: number;
+};
+
+export type ResumoSemanal = {
+  id: number;
+  semana_inicio: string;
+  semana_fim: string;
+  ifix_variacao_semana: number | null;
+  ifix_variacao_semana_anterior: number | null;
+  top_altas: VariacaoFii[];
+  top_baixas: VariacaoFii[];
+  setor_destaque: string | null;
+  setor_destaque_variacao: number | null;
+  destaques: string | null;
+  criado_em: string;
+};
+
+export async function buscarResumosSemanais(limite = 12): Promise<ResumoSemanal[]> {
+  const { rows } = await getPool().query<ResumoSemanal>(
+    "SELECT id, semana_inicio, semana_fim, ifix_variacao_semana, " +
+      "ifix_variacao_semana_anterior, top_altas, top_baixas, setor_destaque, " +
+      "setor_destaque_variacao, destaques, criado_em " +
+      "FROM resumo_semanal ORDER BY semana_fim DESC LIMIT $1",
+    [limite]
+  );
+  return rows;
+}
